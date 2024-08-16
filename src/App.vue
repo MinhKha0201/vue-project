@@ -66,6 +66,20 @@ const fetchData = async () => {
     }
 }
 onMounted(fetchData)
+
+defineEmits(['update-teams-data', 'update-apps-data'])
+const handleUpdateTeams = (data: { userId: number; data: Team[] }) => {
+    const user = usersData.value.find((user) => user.id === data.userId)
+    if (user) {
+        user.teams = data.data
+    }
+}
+const handleUpdateApps = (data: { userId: number; data: App[] }) => {
+    const user = usersData.value.find((user) => user.id === data.userId)
+    if (user) {
+        user.apps = data.data
+    }
+}
 </script>
 
 <template>
@@ -91,9 +105,14 @@ onMounted(fetchData)
                                 :user-id="user.id"
                                 :teams="teamsData"
                                 :teamsSelected="user.teams"
+                                @update-teams-data="handleUpdateTeams"
                         /></TableCell>
                         <TableCell>
-                            <AppModal :user-id="user.id" :apps="appsData"
+                            <AppModal
+                                :user-id="user.id"
+                                :apps="appsData"
+                                :app-selected="user.apps"
+                                @update-apps-data="handleUpdateApps"
                         /></TableCell>
                     </TableRow>
                 </TableBody>
