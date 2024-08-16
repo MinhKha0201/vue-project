@@ -15,8 +15,8 @@ import type { User } from './types/User.type'
 import type { App } from './types/App.type'
 
 const usersApi: string = 'https://admob.lutech.vn/api/users'
-const teamsApi = 'https://admob.lutech.vn/api/teams'
-const appsApi = 'https://admob.lutech.vn/api/apps'
+const teamsApi: string = 'https://admob.lutech.vn/api/teams'
+const appsApi: string = 'https://admob.lutech.vn/api/apps'
 
 type Response = {
     current_page: number
@@ -87,9 +87,14 @@ onMounted(fetchData)
                         </TableCell>
                         <TableCell>{{ user.name }}</TableCell>
                         <TableCell
-                            ><TeamModal :user-id="user.id" :teams="teamsData"
+                            ><TeamModal
+                                :user-id="user.id"
+                                :teams="teamsData"
+                                :teamsSelected="user.teams"
                         /></TableCell>
-                        <TableCell> <AppModal /></TableCell>
+                        <TableCell>
+                            <AppModal :user-id="user.id" :apps="appsData"
+                        /></TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
